@@ -1,0 +1,39 @@
+provider "aws" {
+  region = var.aws_region
+  default_tags {
+    tags = {
+      customer_label       = ""
+      customer_id          = ""
+      customer_asset_label = ""
+      customer_asset_id    = ""
+      resource_region      = ""     
+      repo_name            = ""
+      resource_account     = ""
+      sensitivity          = "confidential"
+    }
+  }
+}
+
+terraform {
+  backend "s3" {
+    bucket = ""
+    key    = "terraform.tfstate"
+    region = ""
+  }
+}
+
+
+# VPC Structure
+
+module "vpc_structure" {
+  source                            = "git::ssh://git@bitbucket.org/$reponame/src/$branchname//networt/?ref=$tagname" 
+  vpc_cidr                          = var.vpc_cidr
+  public_subnet_cidr_az_1           = var.public_subnet_cidr_az_1
+  public_subnet_cidr_az_2           = var.public_subnet_cidr_az_2
+  private_subnet_cidr_az_1          = var.private_subnet_cidr_az_1
+  private_subnet_cidr_az_2          = var.private_subnet_cidr_az_2
+  allowed_cidr                      = "NULL"
+  aws_region                        = var.aws_region
+  hosted_zone                       = var.hosted_zone 
+  master_hosted_zone_id             = var.master_hosted_zone_id
+}
