@@ -1,0 +1,39 @@
+environments:
+  account:
+    name: 'onboarding'
+    templateName: 'cloudplatform-ec-cm-cm-prod-on-boarding'
+    workspace: '329910471165-on-boarding'
+  network:
+    name: 'network'
+    templateName: 'cloudplatform-ec-cm-cm-prod-network'
+    workspace: '329910471165-network'
+    needs:
+      - account 
+  cluster:
+    name: 'eks-cluster'
+    templateName: 'eks-cluster'
+    workspace: 'VAR_ACCOUNT_ID-eks-cluster'
+    needs:
+      - network
+  jenkins:
+    name: 'jenkins'
+    templateName: 'cloudplatform-ec-cm-cm-prod-jenkins-server'
+    workspace: '329910471165-jenkins-server'
+    needs:
+      - network
+  nexus:
+    name: 'nexus'
+    templateName: 'cloudplatform-ec-cm-cm-prod-nexus-server'
+    workspace: '329910471165-nexus-server'
+    needs:
+      - network
+  test:
+    name: 'test'
+    templateName: 'test-server'
+    workspace: '329910471165-hub-server'
+    needs:
+      - network
+    
+  
+settings: 
+  environmentRemovalStrategy: destroy
