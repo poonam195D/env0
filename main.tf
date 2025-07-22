@@ -1,7 +1,7 @@
 module "network" {
   depends_on           = [module.create_onboarding]
-  source               = "git::ssh://git@bitbucket.org/energycomponents/$reponame/src/$branchname//env0_setup/terraform/?ref=$tagname"
-  name                 = "-network"
+  source               = "git::ssh://git@bitbucket.org/$bitbucketowner/$reponame/src/$branchname//env0_setup/terraform/?ref=$tagname"
+  name                 = "network"
   repository           = "https://${var.bitbucket_username}@bitbucket.org/${var.teamsinspace}/${var.repo_name}.git"
   description          = "network"
   job_path             = "cluster/infrastructure/network"
