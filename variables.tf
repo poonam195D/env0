@@ -1,0 +1,10 @@
+variable "projectid" {}
+variable "name" {}
+variable "description" {}
+variable "terraform_version" {}
+variable "repository" {}
+variable "bitbucket_client_key" {}
+variable "job_path" {}
+variable "env0_ssh_name" {}
+variable "template_type" {}
+variable "revision" {}

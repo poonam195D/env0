@@ -1,14 +1,25 @@
-module "network" {
-  depends_on           = [module.create_onboarding]
-  source               = "git::ssh://git@bitbucket.org/$bitbucketowner/$reponame/src/$branchname//env0_setup/terraform/?ref=$tagname"
-  name                 = "network"
-  repository           = "https://${var.bitbucket_username}@bitbucket.org/${var.teamsinspace}/${var.repo_name}.git"
-  description          = "network"
-  job_path             = "cluster/infrastructure/network"
+terraform {
+  required_providers {
+    env0 = {
+      source = "env0/env0"
+    }
+  }
+}
+
+resource "env0_template" "master" {
+  name                 = var.name
+  description          = var.description
+  repository           = var.repository
+  path                 = var.job_path
   terraform_version    = var.terraform_version
-  revision             = var.repo_master_branch
-  template_type        = "terraform"
+  revision             = var.revision
+  type                 = var.template_type
   bitbucket_client_key = var.bitbucket_client_key
-  projectid            = var.projectid
-  env0_ssh_name        = [data.env0_ssh_key.my_key]
+  ssh_keys             = var.env0_ssh_name
+}
+
+resource "env0_template_project_assignment" "assignment" {
+  depends_on  = [env0_template.master]
+  template_id = env0_template.master.id
+  project_id  = var.projectid
 }
